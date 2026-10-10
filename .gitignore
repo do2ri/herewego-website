@@ -1,0 +1,5 @@
+# Only the website is tracked; source material (deck, scores, screenshots, notes) stays local.
+/*
+!/index.html
+!/assets/
+!/.gitignore

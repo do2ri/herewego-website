@@ -1,0 +1,1045 @@
+<!doctype html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Here We GO Robotics</title>
+  <link rel="icon" href="assets/hwg-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700&family=Orbitron:wght@600;700;800&display=swap">
+  <style>
+    /* Dark by default: near-black ground, logo red for marks. */
+    :root {
+      color-scheme: dark;
+      --bg: #121011;
+      --soft: #1D1A1B;
+      --ink: #F3EFEF;
+      --muted: #A9A0A1;
+      --line: #2F2A2B;
+      --red: #E30613;
+      /* logo red, for marks and fills */
+      --red-text: #FF5C66;
+      /* 6.2:1 on --bg, for text and links */
+      --hdr: 72px;
+      --font: "Figtree", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --brand: "Orbitron", "Figtree", system-ui, sans-serif;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-padding-top: 88px;
+    }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--ink);
+      font: 400 1.0625rem/1.7 var(--font);
+    }
+
+    h1,
+    h2,
+    h3 {
+      line-height: 1.2;
+      margin: 0;
+      text-wrap: balance;
+    }
+
+    p,
+    ul,
+    ol {
+      margin: 0;
+    }
+
+    a {
+      color: var(--red-text);
+    }
+
+    img {
+      max-width: 100%;
+    }
+
+    [tabindex="-1"]:focus {
+      outline: none;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--red-text);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
+    /* language switch: only the active language is rendered */
+    html[lang="de"] [lang="en"],
+    html[lang="en"] [lang="de"] {
+      display: none !important;
+    }
+
+    .wrap {
+      max-width: 1080px;
+      margin-inline: auto;
+      padding-inline: 20px;
+    }
+
+    .skip {
+      position: absolute;
+      left: 16px;
+      top: -100px;
+      background: var(--ink);
+      color: var(--bg);
+      padding: 8px 14px;
+      z-index: 10;
+    }
+
+    .skip:focus {
+      top: 12px;
+    }
+
+    /* header */
+    header {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 5;
+      background: var(--bg);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 8px 24px;
+      min-height: var(--hdr);
+      padding-block: 10px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      font: 700 1.125rem/1 var(--brand);
+      letter-spacing: .04em;
+      margin-right: auto;
+    }
+
+    .brand img {
+      width: 40px;
+      height: 40px;
+    }
+
+    nav ul {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      list-style: none;
+      padding: 0;
+    }
+
+    nav a {
+      display: block;
+      padding: 8px 14px;
+      border-radius: 6px;
+      color: var(--muted);
+      text-decoration: none;
+      font-weight: 500;
+      font-size: 1rem;
+    }
+
+    nav a:hover {
+      color: var(--ink);
+      background: var(--soft);
+    }
+
+    nav a[aria-current="page"] {
+      color: var(--ink);
+      font-weight: 600;
+      box-shadow: inset 0 -2px 0 var(--red);
+      border-radius: 6px 6px 0 0;
+    }
+
+    .lang {
+      display: flex;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      overflow: hidden;
+    }
+
+    .lang button {
+      min-width: 44px;
+      min-height: 36px;
+      border: 0;
+      background: var(--bg);
+      color: var(--muted);
+      font: 600 .875rem var(--font);
+      cursor: pointer;
+    }
+
+    .lang button[aria-pressed="true"] {
+      background: var(--ink);
+      color: var(--bg);
+    }
+
+    @media (max-width: 720px) {
+      :root {
+        --hdr: 116px;
+      }
+
+      nav {
+        order: 3;
+        width: 100%;
+      }
+
+      nav a {
+        padding: 8px 10px;
+      }
+    }
+
+    /* pages */
+    main>section {
+      padding-block: 64px 88px;
+    }
+
+    main>#home {
+      padding-block: 0;
+    }
+
+    .page-head {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 40px;
+      max-width: 40em;
+    }
+
+    .page-head h1 {
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-weight: 700;
+    }
+
+    .page-head p {
+      color: var(--muted);
+      font-size: 1.125rem;
+    }
+
+    .eyebrow {
+      font-size: .8125rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--red-text);
+    }
+
+    /* home hero: photo slideshow that stays put while the content below scrolls over it */
+    .hero {
+      position: sticky;
+      top: var(--hdr);
+      z-index: 0;
+      height: calc(100svh - var(--hdr));
+      min-height: 360px;
+      overflow: hidden;
+    }
+
+    .slides {
+      display: flex;
+      height: 100%;
+    }
+
+    .slide {
+      flex: 0 0 100%;
+      height: 100%;
+    }
+
+    /* the whole photo stays visible; the dark ground fills the space beside it */
+    .slide img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      object-position: center bottom;
+      background: var(--bg);
+    }
+
+    /* stand-in colour blocks until real photos arrive; each fills the hero from top to bottom */
+    .slide {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+
+    .block {
+      width: 100%;
+      height: 100%;
+      background: var(--c);
+    }
+
+    .hero-text {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      place-content: center;
+      text-align: center;
+      gap: 8px;
+      padding-inline: 20px;
+      background: linear-gradient(rgba(0, 0, 0, .25), rgba(0, 0, 0, .55));
+      color: #fff;
+      pointer-events: none;
+    }
+
+    .hero-text .we {
+      font-size: clamp(1.375rem, 3.5vw, 2.25rem);
+      font-weight: 500;
+      letter-spacing: .08em;
+    }
+
+    .hero-text .name {
+      font: 800 clamp(3rem, 11vw, 8.5rem)/1.05 var(--brand);
+      letter-spacing: .03em;
+    }
+
+    .hero-nav {
+      position: absolute;
+      top: 50%;
+      translate: 0 -50%;
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border: 1px solid rgba(255, 255, 255, .5);
+      border-radius: 50%;
+      background: rgba(0, 0, 0, .4);
+      color: #fff;
+      cursor: pointer;
+    }
+
+    .hero-nav:hover {
+      background: rgba(0, 0, 0, .65);
+    }
+
+    .hero-nav.prev {
+      left: 20px;
+    }
+
+    .hero-nav.next {
+      right: 20px;
+    }
+
+    .sr {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      overflow: hidden;
+      clip-path: inset(50%);
+      white-space: nowrap;
+    }
+
+    .home-body {
+      position: relative;
+      z-index: 1;
+      background: var(--bg);
+      padding-block: 88px;
+    }
+
+    .home {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: 48px;
+    }
+
+    /* the photo column takes its height from the text column */
+    .photos {
+      position: relative;
+    }
+
+    .photos-inner {
+      position: absolute;
+      inset: 0;
+      display: grid;
+      grid-template-rows: 1fr;
+    }
+
+    .photo {
+      display: block;
+      width: 100%;
+      height: 100%;
+      min-height: 0;
+      border-radius: 12px;
+      object-fit: cover;
+    }
+
+    .video {
+      display: grid;
+      gap: 16px;
+      margin-top: 72px;
+    }
+
+    .video h2 {
+      font-size: clamp(1.5rem, 3vw, 2rem);
+      font-weight: 700;
+    }
+
+    .video-frame {
+      aspect-ratio: 16 / 9;
+      max-width: 100%;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--soft);
+    }
+
+    .video-frame iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .home h2 {
+      font-size: clamp(2rem, 4.5vw, 2.75rem);
+      font-weight: 700;
+      margin-block: 8px 16px;
+    }
+
+    .home .text {
+      display: grid;
+      gap: 14px;
+    }
+
+    .home .text p {
+      color: var(--muted);
+    }
+
+    @media (max-width: 820px) {
+      .home {
+        grid-template-columns: 1fr;
+        gap: 32px;
+      }
+
+      .photos-inner {
+        position: static;
+        grid-template-rows: none;
+      }
+
+      .photo {
+        aspect-ratio: 4 / 3;
+        height: auto;
+      }
+    }
+
+    /* achievements */
+    .seasons {
+      display: grid;
+      gap: 72px;
+    }
+
+    .season {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: 16px 40px;
+    }
+
+    .season-id {
+      display: grid;
+      gap: 6px;
+      align-content: start;
+    }
+
+    /* season logos have black lettering, so they sit on a white plate */
+    .season-logo {
+      display: block;
+      width: 120px;
+      height: 120px;
+      padding: 10px;
+      background: #fff;
+      border-radius: 12px;
+      margin-bottom: 10px;
+      object-fit: contain;
+    }
+
+    .season h2 {
+      font-size: 1.5rem;
+      font-weight: 700;
+    }
+
+    .season .years {
+      color: var(--muted);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .results {
+      list-style: none;
+      padding: 0;
+      border-top: 1px solid var(--line);
+    }
+
+    .results li {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 4px 24px;
+      padding-block: 16px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .results .event {
+      font-weight: 500;
+    }
+
+    .results .award {
+      color: var(--red-text);
+      font-weight: 600;
+    }
+
+    .results .award.plain {
+      color: var(--muted);
+      font-weight: 400;
+    }
+
+    @media (max-width: 720px) {
+      .season {
+        grid-template-columns: 1fr;
+      }
+
+      .season-logo {
+        width: 88px;
+        height: 88px;
+      }
+    }
+
+    /* sponsors marquee */
+    .marquee {
+      overflow: hidden;
+      border-block: 1px solid var(--line);
+      padding-block: 28px;
+      margin-bottom: 48px;
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    }
+
+    .track {
+      display: flex;
+      width: max-content;
+      animation: scroll 45s linear infinite;
+    }
+
+    .marquee:hover .track,
+    .marquee:focus-within .track {
+      animation-play-state: paused;
+    }
+
+    .track ul {
+      display: flex;
+      gap: 24px;
+      padding: 0 24px 0 0;
+      list-style: none;
+    }
+
+    .logo-tile {
+      display: grid;
+      place-items: center;
+      width: 220px;
+      height: 96px;
+      padding: 12px 16px;
+      background: var(--soft);
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+
+    .logo-tile img {
+      max-height: 64px;
+      width: auto;
+    }
+
+    /* the script makes 4 copies of the list; moving by one copy (25%) loops without a seam */
+    @keyframes scroll {
+      to {
+        transform: translateX(-25%);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .track {
+        animation: none;
+        width: auto;
+      }
+
+      .track ul {
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+
+      .track ul[aria-hidden] {
+        display: none;
+      }
+
+      .marquee {
+        -webkit-mask-image: none;
+        mask-image: none;
+      }
+    }
+
+    .thanks {
+      display: grid;
+      gap: 12px;
+      max-width: 40em;
+      color: var(--muted);
+    }
+
+    /* about FLL */
+    .fll {
+      display: grid;
+      grid-template-columns: 1fr 300px;
+      gap: 48px;
+      align-items: start;
+    }
+
+    .fll .text {
+      display: grid;
+      gap: 16px;
+      max-width: 38em;
+    }
+
+    .fll h2 {
+      font-size: 1.25rem;
+      font-weight: 700;
+      margin-top: 16px;
+    }
+
+    .fll ul {
+      padding-left: 1.2em;
+      display: grid;
+      gap: 6px;
+    }
+
+    .fll aside {
+      display: grid;
+      gap: 24px;
+    }
+
+    /* the FLL logo and chart have white grounds and black lettering, so each sits on its own white plate */
+    .fll aside img {
+      display: block;
+      width: 100%;
+      height: auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 12px;
+    }
+
+    @media (max-width: 720px) {
+      .fll {
+        grid-template-columns: 1fr;
+      }
+
+      .fll aside {
+        max-width: 240px;
+      }
+    }
+
+    /* footer */
+    footer {
+      position: relative;
+      z-index: 1;
+      background: var(--soft);
+      border-top: 1px solid var(--line);
+      padding-block: 48px;
+      font-size: 1rem;
+    }
+
+    .foot {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr 1fr;
+      gap: 32px;
+    }
+
+    .foot h2 {
+      font-size: .8125rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 12px;
+    }
+
+    .foot ul {
+      list-style: none;
+      padding: 0;
+      display: grid;
+      gap: 8px;
+    }
+
+    .foot .team {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      font: 700 1.0625rem var(--brand);
+      letter-spacing: .04em;
+    }
+
+    .foot .team img {
+      width: 44px;
+      height: 44px;
+    }
+
+    .foot small {
+      display: block;
+      margin-top: 32px;
+      color: var(--muted);
+      font-size: .875rem;
+    }
+
+    .email {
+      user-select: all;
+    }
+
+    @media (max-width: 720px) {
+      .foot {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <a class="skip" href="#main"><span lang="de">Zum Inhalt springen</span><span lang="en">Skip to content</span></a>
+
+  <header>
+    <div class="wrap bar">
+      <a class="brand" href="#home"><img src="assets/hwg-logo.png" alt="" width="40" height="40">Here We GO</a>
+      <nav aria-label="Hauptmenü / Main menu">
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#erfolge"><span lang="de">Erfolge</span><span lang="en">Achievements</span></a></li>
+          <li><a href="#sponsors"><span lang="de">Sponsoren</span><span lang="en">Sponsors</span></a></li>
+          <li><a href="#fll"><span lang="de">Über FIRST LEGO League</span><span lang="en">About FIRST LEGO
+                League</span></a></li>
+        </ul>
+      </nav>
+      <div class="lang" role="group" aria-label="Sprache / Language">
+        <button type="button" data-lang="de" aria-pressed="true">DE</button>
+        <button type="button" data-lang="en" aria-pressed="false">EN</button>
+      </div>
+    </div>
+  </header>
+
+  <main id="main">
+    <!-- HOME -->
+    <section id="home" aria-labelledby="home-h">
+      <div class="hero">
+        <!-- Team photos: swap each src for a real photo, e.g. assets/team-1.jpg -->
+        <div class="slides">
+          <div class="slide"><div class="block" style="--c:#E30613"></div></div>
+          <div class="slide"><div class="block" style="--c:#FFC20E"></div></div>
+          <div class="slide"><div class="block" style="--c:#00A651"></div></div>
+        </div>
+        <div class="hero-text">
+          <h1 id="home-h"><span class="we">We are</span><br><span class="name">Here We GO</span></h1>
+        </div>
+        <button class="hero-nav prev" type="button"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M12.5 4 6.5 10l6 6" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg><span class="sr" lang="de">Vorheriges Foto</span><span class="sr" lang="en">Previous
+            photo</span></button>
+        <button class="hero-nav next" type="button"><svg width="20" height="20" viewBox="0 0 20 20" aria-hidden="true">
+            <path d="M7.5 4l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" />
+          </svg><span class="sr" lang="de">Nächstes Foto</span><span class="sr" lang="en">Next photo</span></button>
+      </div>
+
+      <div class="home-body">
+        <div class="wrap">
+          <div class="home">
+            <div class="text">
+              <h2><span lang="de">Wer sind wir?</span><span lang="en">Who are we?</span></h2>
+              <p lang="de">Wir sind Here We GO, das Robotik-Team des Gymnasiums Ottobrunn. Seit der Saison 2023/24
+                (MASTERPIECE) treten wir bei der FIRST LEGO League an.</p>
+              <p lang="en">We are Here We GO, a dedicated robotics team from Ottobrunn, Germany. We have competed in the
+                FIRST LEGO League since the 2023/24 MASTERPIECE season.</p>
+              <p lang="de">Unseren LEGO-Roboter bauen wir mit LEGO SPIKE Prime und programmieren ihn in Python.</p>
+              <p lang="en">We build our Lego robot with LEGO SPIKE Prime and program it in Python. </p>
+            </div>
+            <div class="photos">
+              <div class="photos-inner">
+                <!-- Team photo: swap src for the real photo -->
+                <div class="photo" style="background:#E30613"></div>
+              </div>
+            </div>
+          </div>
+
+          <div class="video">
+            <h2>Video</h2>
+            <div class="video-frame">
+              <iframe src="https://www.youtube-nocookie.com/embed/C6TXdDtwDZk" title="Here We GO – YouTube"
+                allow="accelerometer; encrypted-media; gyroscope; picture-in-picture; fullscreen" loading="lazy"
+                referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+            </div>
+            <p><a href="https://youtu.be/C6TXdDtwDZk" target="_blank" rel="noopener"><span lang="de">Auf YouTube
+                  ansehen</span><span lang="en">Watch on YouTube</span></a></p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ERFOLGE -->
+    <section id="erfolge" aria-labelledby="erfolge-h" hidden>
+      <div class="wrap">
+        <div class="page-head">
+          <h1 id="erfolge-h"><span lang="de">Erfolge</span><span lang="en">Achievements</span></h1>
+          <p lang="de">Unsere Ergebnisse in der FIRST LEGO League</p>
+          <p lang="en">Our FIRST LEGO League results</p>
+        </div>
+        <div class="seasons">
+          <article class="season">
+            <div class="season-id">
+              <img class="season-logo" src="assets/season-unearthed.png" alt="" width="480" height="419">
+              <h2>UNEARTHED</h2>
+              <p class="years">2025/26</p>
+            </div>
+            <ul class="results">
+              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                    Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
+                    lang="en">Champion · Robot Game Cup</span></span></li>
+              <li><span class="event"><span lang="de">Qualifikation Heidelberg</span><span lang="en">Semifinal,
+                    Heidelberg</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
+                    lang="en">Champion · Robot Game Cup</span></span></li>
+              <li><span class="event"><span lang="de">D-A-CH Finale Leipzig</span><span lang="en">D-A-CH Final,
+                    Leipzig</span></span><span class="award"><span lang="de">2. Platz gesamt</span><span lang="en">2nd
+                    place overall</span></span></li>
+              <li><span class="event"><span lang="de">Korea Open Invitational, Jeonju (Juli 2026)</span><span
+                    lang="en">Korea Open Invitational, Jeonju (July 2026)</span></span><span class="award">Breakthrough
+                  Award</span></li>
+            </ul>
+          </article>
+          <article class="season">
+            <div class="season-id">
+              <img class="season-logo" src="assets/season-submerged.png" alt="" width="480" height="480">
+              <h2>SUBMERGED</h2>
+              <p class="years">2024/25</p>
+            </div>
+            <ul class="results">
+              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                    Munich</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span lang="en">Robot
+                    Game Cup</span></span></li>
+              <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
+                    Regensburg</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span
+                    lang="en">Robot Game Cup</span></span></li>
+            </ul>
+          </article>
+          <article class="season">
+            <div class="season-id">
+              <img class="season-logo" src="assets/season-masterpiece.png" alt="" width="480" height="273">
+              <h2>MASTERPIECE</h2>
+              <p class="years">2023/24</p>
+            </div>
+            <ul class="results">
+              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                    Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
+                    lang="en">Champion · Robot Game Cup</span></span></li>
+              <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
+                    Regensburg</span></span><span class="award plain"><span lang="de">-</span><span
+                    lang="en">-</span></span></li>
+            </ul>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- SPONSORS -->
+    <section id="sponsors" aria-labelledby="sponsors-h" hidden>
+      <div class="wrap">
+        <div class="page-head">
+          <h1 id="sponsors-h"><span lang="de">Sponsoren</span><span lang="en">Sponsors</span></h1>
+        </div>
+      </div>
+      <!-- Replace the text in each .logo-tile with <img src="assets/..." alt="Name"> once logos are approved. -->
+      <div class="marquee">
+        <div class="track">
+          <ul>
+            <li class="logo-tile">Kreissparkasse München Starnberg Ebersberg</li>
+            <li class="logo-tile">msg</li>
+            <li class="logo-tile">Macron Sports Hub München</li>
+            <li class="logo-tile">CCO24</li>
+            <li class="logo-tile">MB Electronic</li>
+            <li class="logo-tile">Wilhelm Stemmer Stiftung</li>
+            <li class="logo-tile">Stiftung der Kreissparkasse für den Landkreis München</li>
+            <li class="logo-tile">Gröbenzell hilft e.V.</li>
+          </ul>
+        </div>
+      </div>
+      <div class="wrap">
+        <div class="thanks" lang="de">
+          <p>Vielen Dank an alle unsere Sponsoren! Ohne sie wären Materialien und unsere Reisen zu den Wettbewerben
+            nicht möglich.</p>
+          <p>Sie möchten uns auch unterstützen? Schreiben Sie uns gern eine E-Mail an
+            <a href="mailto:herewego6278412@gmail.com">herewego6278412@gmail.com</a> oder kontaktieren Sie uns über
+            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.</p>
+        </div>
+        <div class="thanks" lang="en">
+          <p>Thank you to everyone who supports us. Without our sponsors, materials and travel to competitions would
+            not be possible.</p>
+          <p>Would you like to support us too? Feel free to email us at
+            <a href="mailto:herewego6278412@gmail.com">herewego6278412@gmail.com</a> or reach out on
+            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT FLL -->
+    <section id="fll" aria-labelledby="fll-h" hidden>
+      <div class="wrap">
+        <div class="page-head">
+          <h1 id="fll-h"><span lang="de">Über FIRST LEGO League</span><span lang="en">About FIRST LEGO League</span>
+          </h1>
+        </div>
+        <div class="fll">
+          <div class="text">
+            <p lang="de">Die FIRST LEGO League Challenge besteht aus vier Teilen: Grundwerte, Forschung, Robot Design
+              und Robot Game.</p>
+            <p lang="en">FIRST LEGO League Challenge consists of four parts: Core Values, Innovation Project, Robot
+              Design and Robot Game.</p>
+
+            <h2><span lang="de">Grundwerte</span><span lang="en">Core Values</span></h2>
+            <p lang="de">Die Grundwerte werden bei der Jurybewertung und während der Robot-Game-Runden bewertet. Wie der
+              Name schon sagt, sind sie die Grundlage der FIRST LEGO League und machen sie zu etwas Besonderem.</p>
+            <p lang="en">Core Values are assessed during the judging session and the Robot Game matches. As the name
+              suggests, they are the foundation of FIRST LEGO League and what makes it special.</p>
+
+            <h2><span lang="de">Forschung</span><span lang="en">Innovation Project</span></h2>
+            <p lang="de">Bei der Forschung stellt das Team sein Projekt zum jährlich wechselnden Saisonthema in einer
+              fünfminütigen Präsentation bei der Jurybewertung vor. Danach stellt die Jury Fragen zum Projekt.</p>
+            <p lang="en">In the Innovation Project, the team presents its project on the season theme, which changes
+              every year, in a five-minute presentation during the judging session. Afterwards, the judges ask
+              questions about the project.</p>
+
+            <h2>Robot Design</h2>
+            <p lang="de">Beim Robot Design muss das Team die Konstruktion und Programmierung seines Roboters erklären.
+              Wichtig ist dabei nicht nur das „Was“, sondern auch, warum und wie das Team zu seinen Ergebnissen
+              gekommen ist.</p>
+            <p lang="en">In Robot Design, the team has to explain how its robot is built and programmed. What matters
+              is not only the “what”, but also why and how the team arrived at its results.</p>
+
+            <h2>Robot Game</h2>
+            <p lang="de">Das Team tritt in drei Robot-Game-Runden von je 2,5 Minuten an. Dabei versucht es, mit seinem
+              LEGO-Roboter so viele Aufgaben wie möglich auf der Spielmatte zu lösen. Nur die beste Punktzahl zählt.</p>
+            <p lang="en">The team competes in three Robot Game matches of 2.5 minutes each. In each match, it tries to
+              complete as many missions as possible on the field mat with its LEGO robot. Only the best score
+              counts.</p>
+
+            <p><a href="https://www.first-lego-league.org/" target="_blank" rel="noopener"><span lang="de">Mehr auf
+                  first-lego-league.org</span><span lang="en">Learn more at first-lego-league.org</span></a></p>
+          </div>
+          <aside>
+            <img src="assets/fll-logo.png" alt="FIRST LEGO League" width="463" height="143">
+            <img src="assets/fll-4-parts.jpg"
+              alt="Die vier Teile der FLL Challenge / The four parts of FLL Challenge: Robot Design, Robot Game, Core Values, Innovation Project"
+              width="297" height="286">
+          </aside>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="foot">
+        <div>
+          <p class="team"><img src="assets/hwg-logo.png" alt="" width="44" height="44">Here We GO</p>
+          <p style="margin-top:8px;color:var(--muted)"><span lang="de">Robotik-Team des Gymnasiums Ottobrunn</span><span
+              lang="en">Robotics team of Gymnasium Ottobrunn</span></p>
+        </div>
+        <div>
+          <h2><span lang="de">Kontakt</span><span lang="en">Contact</span></h2>
+          <ul>
+            <li><a class="email" href="mailto:herewego6278412@gmail.com">herewego6278412@gmail.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <h2>Social</h2>
+          <ul>
+            <li><a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram ·
+                @herewego_robotics</a></li>
+            <li><a href="https://www.youtube.com/@HereWeGO-w1j" target="_blank" rel="noopener">YouTube ·
+                @HereWeGO-w1j</a></li>
+            <li><a href="https://github.com/GO-Robot-FLL" target="_blank" rel="noopener">GitHub · GO-Robot-FLL</a></li>
+          </ul>
+        </div>
+      </div>
+      <small>© 2026 Here We GO · Gymnasium Ottobrunn</small>
+    </div>
+  </footer>
+
+  <script>
+    // Pages: show the section named in the URL hash, default Home.
+    const pages = [...document.querySelectorAll('main > section')];
+    function show(e) {
+      const id = location.hash.slice(1);
+      const page = pages.find(p => p.id === id) || pages[0];
+      pages.forEach(p => p.hidden = p !== page);
+      document.querySelectorAll('nav a').forEach(a => {
+        if (a.getAttribute('href') === '#' + page.id) a.setAttribute('aria-current', 'page');
+        else a.removeAttribute('aria-current');
+      });
+      window.scrollTo(0, 0);
+      // Move focus only when the visitor navigates, not on first load or refresh.
+      if (e) { const h = page.querySelector('h1'); h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    }
+    addEventListener('hashchange', show);
+    document.querySelector('.skip').addEventListener('click', e => {
+      e.preventDefault(); const h = pages.find(p => !p.hidden).querySelector('h1'); h.tabIndex = -1; h.focus();
+    });
+    show();
+
+    // Hero slideshow: slides move left every 5 s; a clone of the first slide makes the loop seamless.
+    const track = document.querySelector('.slides');
+    const total = track.children.length;
+    const clone = track.firstElementChild.cloneNode(true);
+    clone.setAttribute('aria-hidden', 'true');
+    track.append(clone);
+    let index = 0, timer = null;
+    const autoplay = !matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function go(i, animate) {
+      index = i;
+      track.style.transition = animate ? 'transform .9s ease' : 'none';
+      track.style.transform = `translateX(${-i * 100}%)`;
+    }
+    function step(d) {
+      if (index === total) go(0, false);           // sitting on the clone: jump back to the real first slide
+      if (index === 0 && d < 0) go(total, false);  // going back from the first slide: start from the clone
+      track.offsetWidth;                           // apply the jump before animating
+      go(index + d, true);
+    }
+    track.addEventListener('transitionend', () => { if (index === total) go(0, false); });
+    function restart() {
+      clearInterval(timer);
+      if (autoplay) timer = setInterval(() => step(1), 5000);
+    }
+    document.querySelector('.hero-nav.prev').addEventListener('click', () => { step(-1); restart(); });
+    document.querySelector('.hero-nav.next').addEventListener('click', () => { step(1); restart(); });
+    restart();
+
+    // Sponsor marquee: 4 copies of the list so even wide screens never run out of logos.
+    const list = document.querySelector('.track ul');
+    for (let i = 0; i < 3; i++) {
+      const copy = list.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      list.parentNode.append(copy);
+    }
+
+    // Language: DE / EN, remembered per browser.
+    const buttons = document.querySelectorAll('.lang button');
+    function setLang(l) {
+      document.documentElement.lang = l;
+      buttons.forEach(b => b.setAttribute('aria-pressed', b.dataset.lang === l));
+      try { localStorage.setItem('lang', l); } catch (e) { }
+    }
+    buttons.forEach(b => b.addEventListener('click', () => setLang(b.dataset.lang)));
+    try { const saved = localStorage.getItem('lang'); if (saved) setLang(saved); } catch (e) { }
+  </script>
+</body>
+
+</html>
