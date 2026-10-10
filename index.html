@@ -306,13 +306,31 @@
       height: 100%;
     }
 
-    /* the whole photo stays visible; the dark ground fills the space beside it */
-    .slide img {
-      width: 100%;
-      height: 100%;
-      object-fit: contain;
-      object-position: center bottom;
+    /* the whole photo stays visible; a blurred, darkened copy of it (--photo) fills the space beside it */
+    .slide {
+      position: relative;
+      overflow: hidden;
       background: var(--bg);
+    }
+
+    .slide::before {
+      content: "";
+      position: absolute;
+      inset: -60px;
+      background: var(--photo, none) center / cover;
+      filter: blur(30px) brightness(.55);
+    }
+
+    /* photo is 112.5% of the hero height and sits on the bottom edge, so its top ~11% is cropped
+       and it gets wider; whatever space is left at the sides shows the blur */
+    .slide img {
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      translate: -50% 0;
+      height: 112.5%;
+      width: auto;
+      max-width: none;
     }
 
     /* stand-in colour blocks until real photos arrive; each fills the hero from top to bottom */
@@ -783,11 +801,18 @@
     <!-- HOME -->
     <section id="home" aria-labelledby="home-h">
       <div class="hero">
-        <!-- Team photos: swap each src for a real photo, e.g. assets/team-1.jpg -->
+        <!-- Team photos: <div class="slide" style="--photo:url(assets/X.jpg)"><img src="assets/X.jpg" alt="..."></div> (same file in both places) -->
         <div class="slides">
-          <div class="slide"><div class="block" style="--c:#E30613"></div></div>
-          <div class="slide"><div class="block" style="--c:#FFC20E"></div></div>
-          <div class="slide"><div class="block" style="--c:#00A651"></div></div>
+          <div class="slide" style="--photo:url(assets/team-1.jpg)">
+            <img src="assets/team-1.jpg" width="1600" height="1066"
+              alt="Team Here We GO mit Pokal auf der Bühne (UNEARTHED) / Team Here We GO on stage with the trophy (UNEARTHED)">
+          </div>
+          <div class="slide">
+            <div class="block" style="--c:#FFC20E"></div>
+          </div>
+          <div class="slide">
+            <div class="block" style="--c:#00A651"></div>
+          </div>
         </div>
         <svg class="scroll-hint" width="44" height="44" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M8 12l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" />
@@ -926,18 +951,20 @@
       </div>
       <div class="wrap">
         <div class="thanks" lang="de">
-          <p>Vielen Dank an alle unsere Sponsoren! Ohne sie wären Materialien und unsere Reisen zu den Wettbewerben
+          <p>Vielen Dank an alle unsere Sponsoren! Ohne euch wären Materialien und unsere Reisen zu den Wettbewerben
             nicht möglich.</p>
           <p>Sie möchten uns auch unterstützen? Schreiben Sie uns gern eine E-Mail an
             <a href="mailto:herewego6278412@gmail.com">herewego6278412@gmail.com</a> oder kontaktieren Sie uns über
-            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.</p>
+            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.
+          </p>
         </div>
         <div class="thanks" lang="en">
           <p>Thank you to everyone who supports us. Without our sponsors, materials and travel to competitions would
             not be possible.</p>
           <p>Would you like to support us too? Feel free to email us at
             <a href="mailto:herewego6278412@gmail.com">herewego6278412@gmail.com</a> or reach out on
-            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.</p>
+            <a href="https://www.instagram.com/herewego_robotics/" target="_blank" rel="noopener">Instagram</a>.
+          </p>
         </div>
       </div>
     </section>
