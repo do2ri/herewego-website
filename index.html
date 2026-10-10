@@ -110,6 +110,25 @@
       border-bottom: 1px solid var(--line);
     }
 
+    /* On Home the menu is hidden at the very top and slides in once the visitor scrolls
+       (or tabs into it with the keyboard). */
+    .on-home header {
+      position: fixed;
+      left: 0;
+      right: 0;
+      transition: transform .3s ease;
+    }
+
+    .on-home.at-top header:not(:focus-within) {
+      transform: translateY(calc(-100% - env(safe-area-inset-top, 0px)));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .on-home header {
+        transition: none;
+      }
+    }
+
     .bar {
       display: flex;
       flex-wrap: wrap;
@@ -244,6 +263,37 @@
       height: calc(100svh - var(--hdr));
       min-height: 360px;
       overflow: hidden;
+    }
+
+    /* small arrow at the bottom of the hero hinting that there is more below */
+    .scroll-hint {
+      position: absolute;
+      left: 50%;
+      bottom: 24px;
+      translate: -50% 0;
+      z-index: 1;
+      color: #fff;
+      opacity: .85;
+      animation: hint 1.8s ease-in-out infinite;
+      pointer-events: none;
+    }
+
+    @keyframes hint {
+      50% {
+        transform: translateY(6px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .scroll-hint {
+        animation: none;
+      }
+    }
+
+    /* with the menu floating over the page, the hero fills the whole screen */
+    .on-home .hero {
+      top: 0;
+      height: 100svh;
     }
 
     .slides {
@@ -739,6 +789,9 @@
           <div class="slide"><div class="block" style="--c:#FFC20E"></div></div>
           <div class="slide"><div class="block" style="--c:#00A651"></div></div>
         </div>
+        <svg class="scroll-hint" width="44" height="44" viewBox="0 0 32 32" aria-hidden="true">
+          <path d="M8 12l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" />
+        </svg>
         <div class="hero-text">
           <h1 id="home-h"><span class="we">We are</span><br><span class="name">Here We GO</span></h1>
         </div>
@@ -984,10 +1037,16 @@
         if (a.getAttribute('href') === '#' + page.id) a.setAttribute('aria-current', 'page');
         else a.removeAttribute('aria-current');
       });
+      document.documentElement.classList.toggle('on-home', page.id === 'home');
       window.scrollTo(0, 0);
+      atTop();
       // Move focus only when the visitor navigates, not on first load or refresh.
       if (e) { const h = page.querySelector('h1'); h.tabIndex = -1; h.focus({ preventScroll: true }); }
     }
+    function atTop() {
+      document.documentElement.classList.toggle('at-top', scrollY < 10);
+    }
+    addEventListener('scroll', atTop, { passive: true });
     addEventListener('hashchange', show);
     document.querySelector('.skip').addEventListener('click', e => {
       e.preventDefault(); const h = pages.find(p => !p.hidden).querySelector('h1'); h.tabIndex = -1; h.focus();
