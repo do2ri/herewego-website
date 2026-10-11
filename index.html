@@ -1,3 +1,6 @@
+---
+# front matter so GitHub Pages runs Liquid on this page (builds the hero slides)
+---
 <!doctype html>
 <html lang="de">
 
@@ -33,7 +36,7 @@
     }
 
     html {
-      scroll-padding-top: 88px;
+      scroll-padding-top: calc(var(--hdr) + 16px);
     }
 
     body {
@@ -216,8 +219,16 @@
         width: 100%;
       }
 
+      /* one row that scrolls sideways instead of wrapping into a tall header */
+      nav ul {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+      }
+
       nav a {
         padding: 8px 10px;
+        white-space: nowrap;
       }
     }
 
@@ -331,19 +342,6 @@
       height: 112.5%;
       width: auto;
       max-width: none;
-    }
-
-    /* stand-in colour blocks until real photos arrive; each fills the hero from top to bottom */
-    .slide {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-    }
-
-    .block {
-      width: 100%;
-      height: 100%;
-      background: var(--c);
     }
 
     .hero-text {
@@ -495,6 +493,17 @@
       .photo {
         aspect-ratio: 4 / 3;
         height: auto;
+      }
+
+      .hero-text .name {
+        font-size: 10vw;
+      }
+
+      /* arrows move down beside the scroll hint so they don't cover the title */
+      .hero-nav {
+        top: auto;
+        bottom: 16px;
+        translate: none;
       }
     }
 
@@ -813,18 +822,21 @@
     <!-- HOME -->
     <section id="home" aria-labelledby="home-h">
       <div class="hero">
-        <!-- Team photos: <div class="slide" style="--photo:url(assets/X.jpg)"><img src="assets/X.jpg" alt="..."></div> (same file in both places) -->
+        <!-- Slides are built by GitHub Pages (Jekyll) from the photo folder: the photo in
+             background_Teamfotos/Main Image comes first, then the rest of background_Teamfotos by name. -->
         <div class="slides">
-          <div class="slide" style="--photo:url(assets/team-1.jpg)">
-            <img src="assets/team-1.jpg" width="1600" height="1066"
-              alt="Team Here We GO mit Pokal auf der Bühne (UNEARTHED) / Team Here We GO on stage with the trophy (UNEARTHED)">
-          </div>
-          <div class="slide">
-            <div class="block" style="--c:#FFC20E"></div>
-          </div>
-          <div class="slide">
-            <div class="block" style="--c:#00A651"></div>
-          </div>
+          {%- assign photos = site.static_files | sort: "path" -%}
+          {%- for main in (1..2) -%}
+          {%- for f in photos -%}
+          {%- assign ext = f.extname | downcase -%}
+          {%- unless f.path contains "/background_Teamfotos/" and ".jpg .jpeg .png .webp" contains ext -%}{%- continue -%}{%- endunless -%}
+          {%- if f.path contains "/Main Image/" -%}{%- assign is_main = 1 -%}{%- else -%}{%- assign is_main = 2 -%}{%- endif -%}
+          {%- if is_main == main -%}
+          {%- assign src = f.path | remove_first: "/" | uri_escape %}
+          <div class="slide" style="--photo:url('{{ src }}')"><img src="{{ src }}" alt=""></div>
+          {%- endif -%}
+          {%- endfor -%}
+          {%- endfor %}
         </div>
         <svg class="scroll-hint" width="44" height="44" viewBox="0 0 32 32" aria-hidden="true">
           <path d="M8 12l8 8 8-8" fill="none" stroke="currentColor" stroke-width="2.5" />
@@ -950,13 +962,19 @@
       <div class="marquee">
         <div class="track">
           <ul>
-            <li class="logo-tile"><img src="assets/sponsors/kreissparkasse-muenchen-starnberg-ebersberg.svg" alt="Kreissparkasse München Starnberg Ebersberg" width="1511" height="296"></li>
+            <li class="logo-tile"><img src="assets/sponsors/kreissparkasse-muenchen-starnberg-ebersberg.svg"
+                alt="Kreissparkasse München Starnberg Ebersberg" width="1511" height="296"></li>
             <li class="logo-tile"><img src="assets/sponsors/msg.svg" alt="msg" width="200" height="63"></li>
-            <li class="logo-tile"><img src="assets/sponsors/macron.svg" alt="Macron Sports Hub München" width="250" height="43"></li>
+            <li class="logo-tile"><img src="assets/sponsors/macron.svg" alt="Macron Sports Hub München" width="250"
+                height="43"></li>
             <li class="logo-tile"><img src="assets/sponsors/cco24.svg" alt="CCO24" width="801" height="251"></li>
-            <li class="logo-tile"><img src="assets/sponsors/mb-electronic.jpg" alt="MB Electronic AG" width="174" height="114"></li>
-            <li class="logo-tile"><img src="assets/sponsors/wilhelm-stemmer-stiftung.webp" alt="Wilhelm Stemmer Stiftung" width="500" height="97"></li>
-            <li class="logo-tile"><img src="assets/sponsors/kreissparkasse-muenchen-starnberg-ebersberg.svg" alt="Stiftung der Kreissparkasse für den Landkreis München" width="1511" height="296"><span class="logo-note" aria-hidden="true">Stiftung für den Landkreis München</span></li>
+            <li class="logo-tile"><img src="assets/sponsors/mb-electronic.jpg" alt="MB Electronic AG" width="174"
+                height="114"></li>
+            <li class="logo-tile"><img src="assets/sponsors/wilhelm-stemmer-stiftung.webp"
+                alt="Wilhelm Stemmer Stiftung" width="500" height="97"></li>
+            <li class="logo-tile"><img src="assets/sponsors/kreissparkasse-muenchen-starnberg-ebersberg.svg"
+                alt="Stiftung der Kreissparkasse für den Landkreis München" width="1511" height="296"><span
+                class="logo-note" aria-hidden="true">Stiftung für den Landkreis München</span></li>
             <li class="logo-tile">Gröbenzell hilft e.V.</li>
           </ul>
         </div>
@@ -996,8 +1014,9 @@
               Design and Robot Game.</p>
 
             <h2><span lang="de">Grundwerte</span><span lang="en">Core Values</span></h2>
-            <p lang="de">Die Grundwerte werden bei der Jurybewertung und während der Robot-Game-Runden bewertet. Wie der
-              Name schon sagt, sind sie die Grundlage der FIRST LEGO League und machen sie zu etwas Besonderem.</p>
+            <p lang="de">Die Grundwerte werden bei der Jurybewertung und während der Robot-Game-Runden bewertet. Dabei
+              geht es vor allem um Teamwork und Spaß und wie der
+              Name schon sagt, sind sie das Fundament und die Leitlinien des gesamten Wettbewerbs</p>
             <p lang="en">Core Values are assessed during the judging session and the Robot Game matches. As the name
               suggests, they are the foundation of FIRST LEGO League and what makes it special.</p>
 
@@ -1061,7 +1080,6 @@
           </ul>
         </div>
       </div>
-      <small>© 2026 Here We GO · Gymnasium Ottobrunn</small>
     </div>
   </footer>
 
