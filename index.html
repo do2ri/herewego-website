@@ -44,6 +44,14 @@
       background: var(--bg);
       color: var(--ink);
       font: 400 1.0625rem/1.7 var(--font);
+      /* main grows so the footer stays at the bottom on short pages */
+      display: flex;
+      flex-direction: column;
+      min-height: 100svh;
+    }
+
+    main {
+      flex: 1;
     }
 
     h1,
