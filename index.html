@@ -810,10 +810,11 @@
       <nav aria-label="Hauptmenü / Main menu">
         <ul>
           <li><a href="#home">Home</a></li>
-          <li><a href="#erfolge"><span lang="de">Erfolge</span><span lang="en">Achievements</span></a></li>
-          <li><a href="#sponsors"><span lang="de">Sponsoren</span><span lang="en">Sponsors</span></a></li>
           <li><a href="#fll"><span lang="de">Über FIRST LEGO League</span><span lang="en">About FIRST LEGO
                 League</span></a></li>
+          <li><a href="#erfolge"><span lang="de">Erfolge</span><span lang="en">Achievements</span></a></li>
+          <li><a href="#forschung"><span lang="de">Forschung</span><span lang="en">Innovation Project</span></a></li>
+          <li><a href="#sponsors"><span lang="de">Sponsoren</span><span lang="en">Sponsors</span></a></li>
         </ul>
       </nav>
       <div class="lang" role="group" aria-label="Sprache / Language">
@@ -975,6 +976,15 @@
       </div>
     </section>
 
+    <!-- FORSCHUNG (empty for now) -->
+    <section id="forschung" aria-labelledby="forschung-h" hidden>
+      <div class="wrap">
+        <div class="page-head">
+          <h1 id="forschung-h"><span lang="de">Forschung</span><span lang="en">Innovation Project</span></h1>
+        </div>
+      </div>
+    </section>
+
     <!-- SPONSORS -->
     <section id="sponsors" aria-labelledby="sponsors-h" hidden>
       <div class="wrap">
@@ -1115,7 +1125,8 @@
       const page = pages.find(p => p.id === id) || pages[0];
       pages.forEach(p => p.hidden = p !== page);
       document.querySelectorAll('nav a').forEach(a => {
-        if (a.getAttribute('href') === '#' + page.id) a.setAttribute('aria-current', 'page');
+        // on phones the menu scrolls sideways, so bring the current item into view
+        if (a.getAttribute('href') === '#' + page.id) { a.setAttribute('aria-current', 'page'); a.scrollIntoView({ block: 'nearest', inline: 'nearest' }); }
         else a.removeAttribute('aria-current');
       });
       document.documentElement.classList.toggle('on-home', page.id === 'home');
