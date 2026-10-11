@@ -576,6 +576,11 @@
       font-weight: 400;
     }
 
+    .season .more {
+      margin-top: 16px;
+      font-size: 1rem;
+    }
+
     @media (max-width: 720px) {
       .season {
         grid-template-columns: 1fr;
@@ -829,8 +834,10 @@
           {%- for main in (1..2) -%}
           {%- for f in photos -%}
           {%- assign ext = f.extname | downcase -%}
-          {%- unless f.path contains "/background_Teamfotos/" and ".jpg .jpeg .png .webp" contains ext -%}{%- continue -%}{%- endunless -%}
-          {%- if f.path contains "/Main Image/" -%}{%- assign is_main = 1 -%}{%- else -%}{%- assign is_main = 2 -%}{%- endif -%}
+          {%- unless f.path contains "/background_Teamfotos/" and ".jpg .jpeg .png .webp" contains ext -%}{%- continue
+          -%}{%- endunless -%}
+          {%- if f.path contains "/Main Image/" -%}{%- assign is_main = 1 -%}{%- else -%}{%- assign is_main = 2 -%}{%-
+          endif -%}
           {%- if is_main == main -%}
           {%- assign src = f.path | remove_first: "/" | uri_escape %}
           <div class="slide" style="--photo:url('{{ src }}')"><img src="{{ src }}" alt=""></div>
@@ -859,7 +866,7 @@
             <div class="text">
               <h2><span lang="de">Wer sind wir?</span><span lang="en">Who are we?</span></h2>
               <p lang="de">Wir sind Here We GO, das Robotik-Team des Gymnasiums Ottobrunn. Seit der Saison 2023/24
-                (MASTERPIECE) treten wir bei der FIRST LEGO League an.</p>
+                treten wir bei der FIRST LEGO League an.</p>
               <p lang="en">We are Here We GO, a dedicated robotics team from Ottobrunn, Germany. We have competed in the
                 FIRST LEGO League since the 2023/24 MASTERPIECE season.</p>
               <p lang="de">Unseren LEGO-Roboter bauen wir mit LEGO SPIKE Prime und programmieren ihn in Python.</p>
@@ -902,20 +909,26 @@
               <h2>UNEARTHED</h2>
               <p class="years">2025/26</p>
             </div>
-            <ul class="results">
-              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
-                    Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
-                    lang="en">Champion · Robot Game Cup</span></span></li>
-              <li><span class="event"><span lang="de">Qualifikation Heidelberg</span><span lang="en">Semifinal,
-                    Heidelberg</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
-                    lang="en">Champion · Robot Game Cup</span></span></li>
-              <li><span class="event"><span lang="de">D-A-CH Finale Leipzig</span><span lang="en">D-A-CH Final,
-                    Leipzig</span></span><span class="award"><span lang="de">2. Platz gesamt</span><span lang="en">2nd
-                    place overall</span></span></li>
-              <li><span class="event"><span lang="de">Korea Open Invitational, Jeonju (Juli 2026)</span><span
-                    lang="en">Korea Open Invitational, Jeonju (July 2026)</span></span><span class="award">Breakthrough
-                  Award</span></li>
-            </ul>
+            <div>
+              <ul class="results">
+                <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                      Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
+                      lang="en">Champion · Robot Game Cup</span></span></li>
+                <li><span class="event"><span lang="de">Qualifikation Heidelberg</span><span lang="en">Semifinal,
+                      Heidelberg</span></span><span class="award"><span lang="de">1. Platz · Robot Game
+                      Pokal</span><span lang="en">Champion · Robot Game Cup</span></span></li>
+                <li><span class="event"><span lang="de">D-A-CH Finale Leipzig</span><span lang="en">D-A-CH Final,
+                      Leipzig</span></span><span class="award"><span lang="de">2. Platz gesamt · Live Challenge
+                      Pokal</span><span lang="en">2nd
+                      place overall · Live Challenge Cup</span></span></li>
+                <li><span class="event"><span lang="de">Korea Open Invitational, Jeonju </span><span lang="en">Korea
+                      Open Invitational, Jeonju </span></span><span class="award">Breakthrough
+                    Award</span></li>
+              </ul>
+              <p class="more"><a href="https://nano-giants.net/robot-game-scores-20252026-unearthed/" target="_blank"
+                  rel="noopener"><span lang="de">Robot-Game-Ergebnisse bei NanoGiants ansehen</span><span lang="en">See
+                    Robot Game scores on NanoGiants</span></a></p>
+            </div>
           </article>
           <article class="season">
             <div class="season-id">
@@ -923,14 +936,20 @@
               <h2>SUBMERGED</h2>
               <p class="years">2024/25</p>
             </div>
-            <ul class="results">
-              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
-                    Munich</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span lang="en">Robot
-                    Game Cup</span></span></li>
-              <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
-                    Regensburg</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span
-                    lang="en">Robot Game Cup</span></span></li>
-            </ul>
+            <div>
+              <ul class="results">
+                <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                      Munich</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span
+                      lang="en">Robot
+                      Game Cup</span></span></li>
+                <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
+                      Regensburg</span></span><span class="award"><span lang="de">Robot Game Pokal</span><span
+                      lang="en">Robot Game Cup</span></span></li>
+              </ul>
+              <p class="more"><a href="https://nano-giants.net/robot-game-scores-20242025-submerged/" target="_blank"
+                  rel="noopener"><span lang="de">Robot-Game-Ergebnisse bei NanoGiants ansehen</span><span lang="en">See
+                    Robot Game scores on NanoGiants</span></a></p>
+            </div>
           </article>
           <article class="season">
             <div class="season-id">
@@ -938,14 +957,19 @@
               <h2>MASTERPIECE</h2>
               <p class="years">2023/24</p>
             </div>
-            <ul class="results">
-              <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
-                    Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
-                    lang="en">Champion · Robot Game Cup</span></span></li>
-              <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
-                    Regensburg</span></span><span class="award plain"><span lang="de">-</span><span
-                    lang="en">-</span></span></li>
-            </ul>
+            <div>
+              <ul class="results">
+                <li><span class="event"><span lang="de">Regionalwettbewerb München</span><span lang="en">Regional,
+                      Munich</span></span><span class="award"><span lang="de">1. Platz · Robot Game Pokal</span><span
+                      lang="en">Champion · Robot Game Cup</span></span></li>
+                <li><span class="event"><span lang="de">Qualifikation Regensburg</span><span lang="en">Semifinal,
+                      Regensburg</span></span><span class="award plain"><span lang="de">-</span><span
+                      lang="en">-</span></span></li>
+              </ul>
+              <p class="more"><a href="https://nano-giants.net/robot-game-scores-20232024-masterpiece/" target="_blank"
+                  rel="noopener"><span lang="de">Robot-Game-Ergebnisse bei NanoGiants ansehen</span><span lang="en">See
+                    Robot Game scores on NanoGiants</span></a></p>
+            </div>
           </article>
         </div>
       </div>
